@@ -1,17 +1,25 @@
 #!/usr/bin/env bash
 
-if command -v pacman &>/dev/null; then
-    sudo pacman -S flatpak
+if ! command -v flatpak &>/dev/null; then
+    if command -v pacman &>/dev/null; then
+        sudo pacman -Sy
+        sudo pacman -S flatpak --noconfirm
+    fi
+
+    if command -v apt-get &>/dev/null; then
+        sudo apt-get update -y
+        sudo apt-get install -y flatpak
+    fi
 fi
 
-if command -v apt-get &>/dev/null; then
-    sudo apt-get flatpak
-fi
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-flatpak --user --noninteractive install flatseal
+flatpak override --user --filesystem=xdg-config/gtk-3.0:ro
+flatpak override --user --filesystem=xdg-config/gtk-4.0:ro
 
-flatpak --user override --filesystem=xdg-config/gtk-3.0:ro
-flatpak --user override --filesystem=xdg-config/gtk-4.0:ro
+flatpak override --user --env=QT_STYLE_OVERRIDE=kvantum
+flatpak override --user --filesystem=xdg-config/Kvantum:ro
 
-flatpak --user override --env=QT_STYLE_OVERRIDE=kvantum
-flatpak --user override --filesystem=xdg-config/Kvantum:ro
+flatpak install --user --noninteractive --assumeyes com.github.tchx84.Flatseal
+
+sudo reboot
