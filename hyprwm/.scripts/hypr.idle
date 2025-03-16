@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+HYPRIDLE_PID=$(pidof hypridle)
+
+if systemctl --user is-active hypridle; then
+    notify-send -a "idle" -h string:x-canonical-private-synchronous:sys-notify "Hypridle turned off" "Device will not sleep"
+    systemctl --user stop hypridle
+else
+    notify-send -a "idle" -h string:x-canonical-private-synchronous:sys-notify "Hypridle turned on" "Device will sleep"
+    systemctl --user restart hypridle
+fi

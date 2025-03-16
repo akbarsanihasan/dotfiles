@@ -1,0 +1,12 @@
+*.log
+.personal
+
+/.contents/nvimrc
+
+/common/.config/tmux/plugins
+
+/hyprwm/.config/gtk-3.0/*
+!/hyprwm/.config/gtk-3.0/settings.ini
+
+/hyprwm/.config/gtk-4.0/*
+!/hyprwm/.config/gtk-4.0/settings.ini

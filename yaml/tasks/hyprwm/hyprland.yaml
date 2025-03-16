@@ -1,0 +1,39 @@
+- name: Installing hyprland packages for Archlinux
+  become: true
+  community.general.pacman:
+      update_cache: true
+      state: latest
+      name:
+          - hyprutils
+          - hyprlang
+          - hyprwayland-scanner
+          - aquamarine
+          - hyprgraphics
+          - hyprcursor
+          - hyprland
+          - hyprland-qtutils
+          - hyprland-qt-support
+          - hyprpolkitagent
+          - xdg-desktop-portal-hyprland
+          - hyprpaper
+          - hypridle
+          - hyprlock
+          - hyprpicker
+  tags:
+      - hyprland
+      - hyprwm
+
+- name: Starting hyprwm application service using systemd
+  ansible.builtin.systemd_service:
+      name: '{{ item.name }}'
+      scope: '{{ item.scope }}'
+      state: '{{ item.state | default(omit) }}'
+      enabled: true
+      daemon_reload: true
+  loop:
+      - {name: hyprpolkitagent, scope: user}
+      - {name: hypridle, scope: user}
+      - {name: hyprpaper, scope: user}
+  tags:
+      - hyprland
+      - hyprwm

@@ -1,0 +1,73 @@
+- name: Installing linux additional packages for Debian
+  become: true
+  when: ansible_facts.os_family == DEB
+  ansible.builtin.apt:
+      update_cache: true
+      state: latest
+      install_recommends: false
+      name:
+          - thunar
+          - ristretto
+          - mousepad
+          - okular
+          - file-roller
+
+          - network-manager-applet
+          - nm-connection-editor
+          - pavucontrol
+
+          - socat
+          - thunar-archive-plugin
+          - gvfs
+          - gvfs-backends
+          - ffmpegthumbnailer
+          - tumbler
+          - webp-pixbuf-loader
+          - mpv-mpris
+          - xdg-user-dirs
+  tags: hyprwm
+
+- name: Installing linux additional package for Archlinux
+  become: true
+  when: ansible_facts.os_family == ARCH
+  community.general.pacman:
+      update_cache: true
+      state: latest
+      name:
+          - thunar
+          - ristretto
+          - mousepad
+          - okular
+          - file-roller
+
+          - network-manager-applet
+          - nm-connection-editor
+          - pavucontrol
+
+          - socat
+          - thunar-archive-plugin
+          - gvfs
+          - gvfs-mtp
+          - ffmpegthumbnailer
+          - tumbler
+          - webp-pixbuf-loader
+          - mpv-mpris
+          - xdg-user-dirs
+  tags: hyprwm
+
+- name: Bookmark xdg-user-dirs folder
+  ansible.builtin.lineinfile:
+      path: '{{ CONFIG_DIR }}/gtk-3.0/bookmarks'
+      create: yes
+      state: present
+      line: 'file://{{ HOME_DIR }}/{{ item }}'
+      regexp: 'file://{{ HOME_DIR }}/{{ item }}'
+  loop:
+      - Documents
+      - Downloads
+      - Music
+      - Pictures
+      - Public
+      - Templates
+      - Videos
+  tags: hyprwm
