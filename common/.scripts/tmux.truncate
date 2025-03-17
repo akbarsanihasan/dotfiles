@@ -13,7 +13,7 @@ if [[ "$LEN" == "basename" ]]; then
     exit 1
 fi
 
-if (( ${#STR} > "$LEN" )); then
+if ((${#STR} > "$LEN")); then
     STR=$(echo "$STR" | tail -c "$LEN")
 
     STR="@/${STR#*/}"

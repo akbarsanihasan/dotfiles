@@ -165,7 +165,7 @@
       cd {{ DOTFILES_CACHE_DIR }}/hyprwm/hyprprotocols
       meson setup build \
             --wipe \
-            --prefix /usr \
+            --prefix /usr/local \
             --buildtype release \
             --wrap-mode nodownload
   tags:

@@ -23,7 +23,6 @@
     "custom/updater": {
         "exec": "~/.scripts/waybar.updater",
         "format": "<span><big>󰚰</big></span> {}",
-        "tooltip-format": "{} Packages update available",
         "interval": 10,
         "max-length": 10,
     },

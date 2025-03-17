@@ -37,7 +37,7 @@
   ansible.builtin.shell: |
       cd {{ DOTFILES_CACHE_DIR }}/uwsm
 
-      meson setup build --prefix=/usr \
+      meson setup build --prefix=/usr/local \
                   -Duuctl=enabled \
                   -Dfumon=enabled \
                   -Duwsm-app=enabled

@@ -10,14 +10,14 @@ if command -v apt-get &>/dev/null; then
     count_packages=$(apt list --upgradable 2>/dev/null | tail -n +2 | wc -l)
 fi
 
-if [[ "${count_packages}" -gt "9" ]]; then
-    count_packages="9+"
-    return 0
-fi
+count_packages_pretty=$count_packages_pretty
 
 if [[ "$count_packages" -gt 0 ]]; then
-    count_packages="0${count_packages}"
-    return 0
+    count_packages_pretty="0${count_packages}"
 fi
 
-echo "${count_packages}"
+if [[ "${count_packages}" -gt "9" ]]; then
+    count_packages_pretty="9+"
+fi
+
+echo -e "${count_packages_pretty}\nYou have ${count_packages} packages to update\n"

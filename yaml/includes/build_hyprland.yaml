@@ -17,7 +17,7 @@
             -S. \
             -GNinja \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX=/usr \
+            -DCMAKE_INSTALL_PREFIX=/usr/local \
             -DINSTALL_QML_PREFIX=/lib/qt6/qml
 
       cmake --build ./build \
