@@ -22,8 +22,8 @@
       - import_tasks: ./yaml/tasks/common/components/vscode.yaml
       - import_tasks: ./yaml/tasks/common/components/git.yaml
 
-      - import_tasks: ./yaml/tasks/hyprwm/hyprland.yaml
-      # - import_tasks: ./yaml/tasks/hyprwm/hyprland.git.yaml
+      # - import_tasks: ./yaml/tasks/hyprwm/hyprland.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/hyprland.git.yaml
       - import_tasks: ./yaml/tasks/hyprwm/clipboard.yaml
       - import_tasks: ./yaml/tasks/hyprwm/pipewire.yaml
       - import_tasks: ./yaml/tasks/hyprwm/packages.yaml

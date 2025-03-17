@@ -10,9 +10,9 @@ if command -v apt-get &>/dev/null; then
     count_packages=$(apt list --upgradable 2>/dev/null | tail -n +2 | wc -l)
 fi
 
-count_packages_pretty=$count_packages_pretty
+count_packages_pretty=$count_packages
 
-if [[ "$count_packages" -gt 0 ]]; then
+if [[ "$count_packages" -gt "0" ]]; then
     count_packages_pretty="0${count_packages}"
 fi
 
