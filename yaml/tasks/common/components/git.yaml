@@ -3,7 +3,7 @@
   when: ansible_facts.os_family == DEB
   ansible.builtin.apt:
       update_cache: true
-      state: latest
+      state: present
       install_recommends: false
       name: [glab, gh]
   tags:
@@ -15,7 +15,7 @@
   when: ansible_facts.os_family == ARCH
   community.general.pacman:
       update_cache: true
-      state: latest
+      state: present
       name: [glab, github-cli]
   tags:
       - git

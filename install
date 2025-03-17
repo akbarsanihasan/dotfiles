@@ -38,7 +38,9 @@ setup_os() {
         fi
 
         sudo apt-get update -y
-        sudo apt-get upgrade -y
+        if apt list --upgradable; then
+            sudo apt-get upgrade -y
+        fi
         ;;
     arch)
         if [[ ! -f /etc/ld.so.conf.d/local.conf ]]; then
@@ -67,7 +69,9 @@ setup_os() {
         fi
 
         sudo pacman -Sy
-        sudo pacman -Syu --noconfirm
+        if sudo pacman -Qu; then
+            sudo pacman -Syu --noconfirm
+        fi
         ;;
     esac
 }

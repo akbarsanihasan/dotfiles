@@ -2,7 +2,7 @@
   become: true
   community.general.pacman:
       update_cache: true
-      state: latest
+      state: present
       name:
           - hyprutils
           - hyprlang
