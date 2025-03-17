@@ -288,6 +288,16 @@
       - hyprland
       - hyprwm
 
+- name: Setting xdg-desktop-portal-hyprland quirks
+  become: true
+  ansible.builtin.file:
+      src: '/usr/local/share/xdg-desktop-portal/portals/hyprland.portal'
+      dest: '/usr/share/xdg-desktop-portal/portals/hyprland.portal'
+      state: link
+  tags:
+      - hyprland
+      - hyprwm
+
 - name: Starting hyprwm application service using systemd
   ansible.builtin.systemd_service:
       name: '{{ item.name }}'
