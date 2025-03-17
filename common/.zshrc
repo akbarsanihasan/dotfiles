@@ -70,11 +70,9 @@ export FZF_DEFAULT_OPTS=" \
 
 export PHP_CS_FIXER_IGNORE_ENV=1
 
-export PATH="$PATH:$HOME/.local/share/flatpak/exports/bin"
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.scripts"
-export PATH="$PATH:$HOME/.local/share/flatpak/exports/share/applications"
-export PATH="$PATH:/var/lib/flatpak/exports/bin"
+export PATH="$PATH:$HOME/.local/share/flatpak/exports/bin"
 
 for dir in $HOME/.scripts/**/*; do
     PATH="$PATH:$dir"
