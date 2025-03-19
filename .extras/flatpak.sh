@@ -31,6 +31,7 @@ flatpak override --user --allow=bluetooth
 flatpak override --user --filesystem=xdg-config/gtk-3.0:ro
 flatpak override --user --filesystem=xdg-config/gtk-4.0:ro
 flatpak override --user --filesystem=xdg-config/Kvantum:ro
+flatpak override --user --filesystem=xdg-data/themes:ro
 
 flatpak override --user --env=QT_STYLE_OVERRIDE=kvantum
 if gsettings get org.gnome.desktop.interface gtk-theme &>/dev/null; then

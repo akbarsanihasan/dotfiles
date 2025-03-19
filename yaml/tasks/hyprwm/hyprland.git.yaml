@@ -288,6 +288,15 @@
       - hyprland
       - hyprwm
 
+- name: Preparing xdg-desktop-portal-hyprland quirks
+  become: true
+  ansible.builtin.file:
+      dest: '/usr/share/xdg-desktop-portal/portals'
+      state: directory
+  tags:
+      - hyprland
+      - hyprwm
+
 - name: Setting xdg-desktop-portal-hyprland quirks
   become: true
   ansible.builtin.file:

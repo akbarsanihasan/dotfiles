@@ -23,23 +23,13 @@
 
 - name: Downloading Neovim source and config
   ansible.builtin.git:
-      repo: 'https://github.com/{{ item.repo }}.git'
-      dest: '{{ item.dest }}'
-      version: '{{ item.version | default(omit) }}'
+      repo: 'https://github.com/neovim/neovim'
+      dest: '{{ DOTFILES_CACHE_DIR }}/neovim'
+      version: '{{ NEOVIM_VERSION }}'
       depth: 1
       recursive: true
       update: false
       accept_hostkey: true
-  loop:
-      - {
-            repo: 'neovim/neovim',
-            dest: '{{ DOTFILES_CACHE_DIR }}/neovim',
-            version: '{{ NEOVIM_VERSION }}',
-        }
-      - {
-            repo: '{{ USER_GITHUB }}/Nvimrc',
-            dest: '{{ playbook_dir }}/.contents/nvimrc',
-        }
   tags:
       - neovim
       - common
@@ -60,15 +50,6 @@
   ansible.builtin.shell: |
       cd {{ DOTFILES_CACHE_DIR }}/neovim
       make install
-  tags:
-      - neovim
-      - common
-
-- name: Installing Neovim config
-  ansible.builtin.file:
-      src: '{{ playbook_dir }}/.contents/nvimrc'
-      dest: '{{ CONFIG_DIR }}/nvim'
-      state: 'link'
   tags:
       - neovim
       - common

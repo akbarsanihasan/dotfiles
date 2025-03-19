@@ -14,6 +14,7 @@ SUCCESS="${GREEN}OK${NC}"
 
 ANSIBLE_VERSION='11.1.0'
 LOGFILE="dotfiles.log"
+AUR_HELPER="yay"
 
 OS=""
 SUPPORTED_OS=(arch debian)

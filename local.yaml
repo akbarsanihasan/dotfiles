@@ -19,7 +19,6 @@
       - import_tasks: ./yaml/tasks/common/browser.yaml
       - import_tasks: ./yaml/tasks/common/nerdfonts.yaml
       - import_tasks: ./yaml/tasks/common/components/neovim.yaml
-      - import_tasks: ./yaml/tasks/common/components/vscode.yaml
       - import_tasks: ./yaml/tasks/common/components/git.yaml
 
       # - import_tasks: ./yaml/tasks/hyprwm/hyprland.yaml

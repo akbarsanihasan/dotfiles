@@ -3,5 +3,5 @@
 source "./flatpak.sh"
 
 if command -v flatpak &>/dev/null; then
-    flatpak --user --noninteractive --assumeyes install org.gimp.GIMP
+    flatpak --user --noninteractive --assumeyes install com.visualstudio.code
 fi
