@@ -128,11 +128,13 @@ scrollbar slider {
     padding: 0.8rem 0;
     border-radius: 0.8rem;
     margin-bottom: 0.2rem;
+    border: 1px solid @surface0;
 }
 
 .notification-group .notification-group-buttons button {
     background-color: @base;
     border: 1px solid @surface0;
+    padding: 0.1rem;
 }
 
 .notification-group .notification-group-buttons button:hover {
@@ -150,6 +152,7 @@ scrollbar slider {
 
 .control-center .notification {
     border-color: @surface0;
+    margin: 0;
 }
 
 .control-center .notification .notification-content {
