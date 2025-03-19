@@ -28,6 +28,6 @@
   loop:
       - {repo: personal, dest: '{{ playbook_dir }}/.personal'}
       - {repo: Notes, dest: '{{ HOME_DIR }}/Documents/Notes'}
-      - {repo: 'Nvimrc', dest: '{{ playbook_dir }}/common/.config/Nvimrc'}
+      - {repo: 'Nvimrc', dest: '{{ playbook_dir }}/common/.config/nvim'}
   tags:
       - personal

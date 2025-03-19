@@ -3,7 +3,7 @@
 
 
 /.contents/nvimrc
-/common/.config/Nvimrc
+/common/.config/nvim
 /common/.config/tmux/plugins
 
 /hyprwm/.config/gtk-3.0/*
