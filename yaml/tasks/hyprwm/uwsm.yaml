@@ -1,4 +1,4 @@
-- name: Installing uwsm build dependencies for Debian
+- name: Installing uwsm dependencies for Debian
   become: true
   when: ansible_facts.os_family == DEB
   ansible.builtin.apt:
@@ -10,7 +10,7 @@
       - uwsm
       - hyprwm
 
-- name: Installing uwsm build dependencies for Archlinux
+- name: Installing uwsm dependencies for Archlinux
   become: true
   when: ansible_facts.os_family == ARCH
   community.general.pacman:

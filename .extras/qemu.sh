@@ -54,7 +54,7 @@ sudo usermod -aG disk "$USER"
 
 dconf write /org/virt-manager/virt-manager/xmleditor-enabled true
 dconf write /org/virt-manager/virt-manager/console/resize-guest 1
-dconf write /org/virt-manager/virt-manager/console/scaling 2
+dconf write /org/virt-manager/virt-manager/console/scaling 1
 dconf write /org/virt-manager/virt-manager/console/auto-redirect false
 dconf write /org/virt-manager/virt-manager/system-tray true
 dconf write /org/virt-manager/virt-manager/new-vm/firmware "'uefi'"

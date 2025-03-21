@@ -47,16 +47,10 @@
           - awk
   tags: common
 
-- name: Detecting zsh binary path
-  register: zsh_path
-  ansible.builtin.shell: which zsh
-  tags: common
-
 - name: Changing default shell to zsh
   become: true
-  when: zsh_path != ''
   ansible.builtin.user:
-      shell: '{{ zsh_path.stdout }}'
+      shell: '/usr/bin/zsh'
       name: '{{ ansible_user_id }}'
   tags: common
 

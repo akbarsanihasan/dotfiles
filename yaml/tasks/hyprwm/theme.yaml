@@ -52,6 +52,18 @@
       - theme
       - hyprwm
 
+- name: Downloading gtk theme
+  ansible.builtin.git:
+      repo: 'https://github.com/vinceliuice/Colloid-gtk-theme'
+      dest: '{{ DOTFILES_CACHE_DIR }}/gtk-theme'
+      version: '{{ GTK_THEME_VERSION }}'
+      depth: 1
+      recursive: true
+      update: false
+  tags:
+      - theme
+      - hyprwm
+
 - name: Creating theme directory
   ansible.builtin.file:
       dest: '{{ item }}'
@@ -61,18 +73,6 @@
       - '{{ DATA_DIR }}/icons'
       - '{{ CONFIG_DIR }}/gtk-4.0'
       - '{{ CONFIG_DIR }}/gtk-3.0'
-  tags:
-      - theme
-      - hyprwm
-
-- name: Downloading gtk theme
-  ansible.builtin.git:
-      repo: 'https://github.com/vinceliuice/Colloid-gtk-theme'
-      dest: '{{ DOTFILES_CACHE_DIR }}/gtk-theme'
-      version: '{{ GTK_THEME_VERSION }}'
-      depth: 1
-      recursive: true
-      update: false
   tags:
       - theme
       - hyprwm
@@ -90,12 +90,7 @@
 
       wget -qO- https://git.io/papirus-icon-theme-install \
                 | env DESTDIR="{{ DATA_DIR }}/icons" TAG="{{ ICON_PACK_VERSION }}" sh
-  tags:
-      - theme
-      - hyprwm
 
-- name: Applying gtk theme
-  ansible.builtin.shell: |
       gsettings set org.gnome.desktop.interface gtk-theme 'Colloid-Purple-Dark-Compact-Catppuccin'
       gsettings set org.gnome.desktop.wm.preferences theme 'Colloid-Purple-Dark-Compact-Catppuccin'
       gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'

@@ -14,10 +14,7 @@ fi
 
 handle() {
     case $1 in
-    monitoradded*)
-        pkill -f ".*wallpaper.*daemon.*"
-        hyprctl dispatch exec "$HOME/.scripts/hypr.wallpaper daemon $arg"
-        ;;
+    monitoradded*) hyprctl dispatch exec "$HOME/.scripts/hypr.wallpaper daemon $arg" ;;
     esac
 }
 

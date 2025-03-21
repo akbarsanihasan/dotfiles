@@ -36,6 +36,7 @@ flatpak override --user --filesystem=xdg-data/themes:ro
 flatpak override --user --filesystem=xdg-data/fonts:ro
 
 flatpak override --user --env=QT_STYLE_OVERRIDE=kvantum
+flatpak override --user --env=QT_QPA_PLATFORM="wayland;xcb"
 if gsettings get org.gnome.desktop.interface gtk-theme &>/dev/null; then
     flatpak override --user --env=GTK_THEME="$(gsettings get org.gnome.desktop.interface gtk-theme | sed "s/'//g")"
 fi

@@ -1,4 +1,4 @@
-- name: Installing rofi build dependencies for Debian
+- name: Installing rofi dependencies for Debian
   become: true
   when: ansible_facts.os_family == DEB
   ansible.builtin.apt:
@@ -31,7 +31,7 @@
       - rofi
       - hyprwm
 
-- name: Installing rofi build dependencies for Archlinux
+- name: Installing rofi dependencies for Archlinux
   become: true
   when: ansible_facts.os_family == ARCH
   community.general.pacman:

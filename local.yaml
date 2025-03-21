@@ -18,22 +18,20 @@
       - import_tasks: ./yaml/tasks/common/app.yaml
       - import_tasks: ./yaml/tasks/common/browser.yaml
       - import_tasks: ./yaml/tasks/common/nerdfonts.yaml
-      - import_tasks: ./yaml/tasks/common/components/neovim.yaml
-      - import_tasks: ./yaml/tasks/common/components/git.yaml
+      - import_tasks: ./yaml/tasks/common/neovim.yaml
+      - import_tasks: ./yaml/tasks/common/git.yaml
+      - import_tasks: ./yaml/tasks/common/flameshot.yaml
 
-      # - import_tasks: ./yaml/tasks/hyprwm/hyprland.yaml
       - import_tasks: ./yaml/tasks/hyprwm/hyprland.git.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/clipboard.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/pipewire.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/packages.yaml
       - import_tasks: ./yaml/tasks/hyprwm/uwsm.yaml
       - import_tasks: ./yaml/tasks/hyprwm/sddm.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/components/bluetooth.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/components/rofi.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/components/swaync.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/components/waybar.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/components/grimblast.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/components/fcitx.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/components/udiskie.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/components/tlp.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/components/theme.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/packages.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/clipboard.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/pipewire.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/bluetooth.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/rofi.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/swaync.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/waybar.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/fcitx.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/tlp.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/theme.yaml

@@ -62,6 +62,8 @@ setup_debian() {
 }
 
 setup_arch() {
+    sudo timedatectl set-ntp true
+
     if ! [[ -f /etc/ld.so.conf.d/local.conf ]]; then
         echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/local.conf
         sudo ldconfig
@@ -106,19 +108,6 @@ setup_arch() {
         sudo pacman -Sy
         sudo pacman -S --noconfirm python-pipx
     fi
-
-    # local AUR_DIR=$HOME/.cache/dotfiles/aur_helper
-    # if ! command -v "${AUR_HELPER}"; then
-    #     clear
-    #     echo -e "Installing ${AUR_HELPER}"
-    #     sleep 2
-    #     sudo pacman -Sy
-    #     sudo pacman -S --noconfirm base-devel git
-    #     if ! [[ -d "${AUR_DIR}" ]]; then
-    #         git clone https://aur.archlinux.org/${AUR_HELPER}-bin.git "${AUR_DIR}"
-    #     fi
-    #     makepkg --noconfirm -sri -D "${AUR_DIR}"
-    # fi
 }
 
 echo -e "* Preparing OS"
@@ -144,8 +133,7 @@ arch)
 esac
 
 if [[ $ISANSIBLE == "$ERROR" ]]; then
-    clear
-    echo -e "** Installing ansible"
+    echo -e "* Installing ansible"
     if ! pipx install --include-deps ansible==$ANSIBLE_VERSION >/dev/null 2>"$LOGFILE"; then
         clear
         echo -e "$ERROR, Failed to install ansible $ANSIBLE_VERSION, see log $LOGFILE"

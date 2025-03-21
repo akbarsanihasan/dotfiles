@@ -11,11 +11,10 @@
           - mousepad
           - okular
           - file-roller
-
+          - udiskie
           - network-manager-applet
           - nm-connection-editor
           - pavucontrol
-
           - socat
           - thunar-archive-plugin
           - gvfs
@@ -39,11 +38,10 @@
           - mousepad
           - okular
           - file-roller
-
+          - udiskie
           - network-manager-applet
           - nm-connection-editor
           - pavucontrol
-
           - socat
           - thunar-archive-plugin
           - gvfs
@@ -58,10 +56,10 @@
 - name: Bookmark xdg-user-dirs folder
   ansible.builtin.lineinfile:
       path: '{{ CONFIG_DIR }}/gtk-3.0/bookmarks'
-      create: yes
-      state: present
       line: 'file://{{ HOME_DIR }}/{{ item }}'
       regexp: 'file://{{ HOME_DIR }}/{{ item }}'
+      state: present
+      create: true
   loop:
       - Documents
       - Downloads
@@ -71,3 +69,53 @@
       - Templates
       - Videos
   tags: hyprwm
+
+- name: Configuring udiskie mountpoint
+  become: true
+  ansible.builtin.lineinfile:
+      path: '{{ item.path }}'
+      line: '{{ item.line }}'
+      regexp: '{{ item.regexp }}'
+      state: present
+      create: true
+  loop:
+      - {
+            path: /etc/tmpfiles.d/media.conf,
+            line: D /media 0755 root root 0 -,
+            regexp: '^D\s*\/media.*root',
+        }
+      - {
+            path: /etc/udev/rules.d/99-udisks2.rules,
+            line: 'ENV{ID_FS_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="1"',
+            regexp: '^ENV{ID_FS_USAGE}==',
+        }
+  tags:
+      - udiskie
+      - hyprwm
+
+- name: Configuring udiskie mount options
+  become: true
+  ansible.builtin.ini_file:
+      path: /etc/udisks2/mount_options.conf
+      section: defaults
+      option: '{{ item.option }}'
+      value: '{{ item.value }}'
+      state: present
+      create: true
+  loop:
+      - {
+            option: exfat_defaults,
+            value: 'uid=$UID,gid=$GID,iocharset=utf8,errors=remount-ro,sync',
+        }
+      - {
+            option: exfat_allow,
+            value: 'uid=$UID,gid=$GID,flush,dmask,errors,fmask,iocharset,namecase,umask,sync',
+        }
+      - {option: ntfs:ntfs3_defaults, value: 'uid=\$UID,gid=\$GID'}
+      - {
+            option: ntfs:ntfs3_allow,
+            value: 'uid=$UID,gid=$GID,flush,umask,dmask,fmask,iocharset,discard,nodiscard,sparse,nosparse,hidden,nohidden,sys_immutable,nosys_immutable,showmeta,noshowmeta,prealloc,noprealloc,hide_dot_files,nohide_dot_files,windows_names,nocase,case',
+        }
+  tags:
+      - udiskie
+      - hyprwm

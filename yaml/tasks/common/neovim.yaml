@@ -21,7 +21,7 @@
       - neovim
       - common
 
-- name: Downloading Neovim source and config
+- name: Downloading Neovim source
   ansible.builtin.git:
       repo: 'https://github.com/neovim/neovim'
       dest: '{{ DOTFILES_CACHE_DIR }}/neovim'

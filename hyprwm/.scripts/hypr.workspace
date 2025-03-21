@@ -39,23 +39,18 @@ function onworkspace() {
     shift 2
 
     if (("$windows_count" < 1)); then
-        if [[ -n "${window_program}" ]]; then
-            if command -v uwsm &>/dev/null; then
-                if ! uwsm app -- "${window_program}" "${@}" >/dev/null 2>&1; then
-                    notify-send "Failed to execute ${window_program}" "Program are possibly not installed"
-                    exit 1
-                fi &
-            else
-                exec "${window_program}" "${@}" >/dev/null 2>&1 &
-            fi
+        if command -v uwsm &>/dev/null; then
+            uwsm app -- "${window_program}" "${@}" >/dev/null 2>&1 &
+        else
+            exec "${window_program}" "${@}" >/dev/null 2>&1 &
+        fi
 
-            local program_pid=$!
+        local program_pid=$!
 
-            if [[ $WORKSPACE_IDENTIFIER == "special" ]]; then
-                hyprctl dispatch togglespecialworkspace "$WORKSPACE_NAME"
-            else
-                hyprctl dispatch movetoworkspacesilent "$WORKSPACE_NAME",pid:$program_pid
-            fi
+        if [[ $WORKSPACE_IDENTIFIER == "special" ]]; then
+            hyprctl dispatch togglespecialworkspace "$WORKSPACE_NAME"
+        else
+            hyprctl dispatch movetoworkspacesilent "$WORKSPACE_NAME",pid:$program_pid
         fi
 
         toworkspace "$WORKSPACE_NAME"

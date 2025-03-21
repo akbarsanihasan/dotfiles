@@ -1,4 +1,4 @@
-- name: Installing swaync build dependencies for Debian
+- name: Installing swaync dependencies for Debian
   become: true
   when: ansible_facts.os_family == DEB
   ansible.builtin.apt:
@@ -25,7 +25,7 @@
       - swaync
       - hyprwm
 
-- name: Installing swaync build dependencies for Archlinux
+- name: Installing swaync dependencies for Archlinux
   become: true
   when: ansible_facts.os_family == ARCH
   community.general.pacman:

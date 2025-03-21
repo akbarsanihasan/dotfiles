@@ -2,22 +2,12 @@
 
 MODE=$1
 WPP_PATH=$2
-
 WPP_ROOT_DIR=$HOME/.wallpapers
-mapfile -t DAEMONS < <(pgrep -f -O 2 ".*wallpaper.*daemon.*")
 
 if ! systemctl --user is-active --quiet hyprpaper.service; then
-    echo "Hyprpaper isn't started"
-    notify-send "Wallpaper daemon" "hyprpaper isn't started"
-    systemctl --user start hyprpaper
-    # exit 0
-fi
-
-if [[ "${#DAEMONS[@]}" -gt 0 ]]; then
-    for daemon in "${DAEMONS[@]}"; do
-        echo "${daemon}"
-        kill -9 "${daemon}"
-    done
+    echo "Hyprpaper is dead"
+    notify-send "Wallpaper daemon" "hyprpaper is dead"
+    systemctl --user restart hyprpaper
 fi
 
 WPP_DIR=$WPP_PATH
@@ -54,6 +44,15 @@ apply() {
 }
 
 daemon() {
+    mapfile -t daemons < <(pgrep -f ".*wallpaper.*daemon.*")
+    mapfile -t daemons_old < <(pgrep -f -o ".*wallpaper.*daemon.*")
+
+    if [[ "${#daemons[@]}" -gt 1 ]]; then
+        for daemon in "${daemons_old[@]}"; do
+            kill -9 "${daemon}"
+        done
+    fi
+
     while true; do
         apply
         sleep 599
@@ -63,4 +62,5 @@ daemon() {
 case $MODE in
 "apply") apply ;;
 "daemon") daemon ;;
+*) echo "$MODE, command not found available <apply|daemon>" ;;
 esac

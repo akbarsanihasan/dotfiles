@@ -15,7 +15,7 @@
           - rtkit
           - libwebkit2gtk-4.1-dev
   tags:
-      - audio_video
+      - pipewire
       - hyprwm
 
 - name: Installing pipewire dependencies for Archlinux
@@ -54,8 +54,8 @@
       cd {{ DOTFILES_CACHE_DIR }}/noise_supressor
 
       cmake --no-warn-unused-cli \
+            -S. \
             -Bbuild \
-            -H. \
             -GNinja \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_PREFIX_PATH=/usr/local

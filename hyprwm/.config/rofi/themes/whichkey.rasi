@@ -3,3 +3,9 @@
 entry {
    placeholder: "  Keybind";
 }
+
+window {
+   width: 80%;
+   location: south;
+   y-offset: -8%;
+}

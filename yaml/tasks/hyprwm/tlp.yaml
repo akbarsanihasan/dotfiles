@@ -25,9 +25,9 @@
   become: true
   ansible.builtin.ini_file:
       path: /etc/tlp.conf
-      create: yes
       option: '{{ item.option }}'
       value: '{{ item.value }}'
+      create: true
       no_extra_spaces: true
   loop:
       - {option: START_CHARGE_THRESH_BAT0, value: 75}
