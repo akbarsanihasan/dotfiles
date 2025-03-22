@@ -30,7 +30,7 @@
       - import_tasks: ./yaml/tasks/hyprwm/pipewire.yaml
       - import_tasks: ./yaml/tasks/hyprwm/bluetooth.yaml
       - import_tasks: ./yaml/tasks/hyprwm/rofi.yaml
-      - import_tasks: ./yaml/tasks/hyprwm/notification.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/swaync.yaml
       - import_tasks: ./yaml/tasks/hyprwm/waybar.yaml
       - import_tasks: ./yaml/tasks/hyprwm/fcitx.yaml
       - import_tasks: ./yaml/tasks/hyprwm/theme.yaml

@@ -143,5 +143,7 @@ fi
 
 if [[ -n $OS ]]; then
     clear
-    ansible-playbook local.yaml "${ANSIBLE_ARGS[@]}" "${@}"
+    if ! ansible-playbook local.yaml "${ANSIBLE_ARGS[@]}" "${@}";then
+	exit 1;
+    fi
 fi
