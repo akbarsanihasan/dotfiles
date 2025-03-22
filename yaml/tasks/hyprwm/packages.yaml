@@ -12,6 +12,7 @@
           - okular
           - file-roller
           - udiskie
+          - tlp
           - network-manager-applet
           - nm-connection-editor
           - pavucontrol
@@ -39,6 +40,7 @@
           - okular
           - file-roller
           - udiskie
+          - tlp
           - network-manager-applet
           - nm-connection-editor
           - pavucontrol
@@ -118,4 +120,33 @@
         }
   tags:
       - udiskie
+      - hyprwm
+
+- name: Configuring tlp options
+  become: true
+  ansible.builtin.ini_file:
+      path: /etc/tlp.conf
+      option: '{{ item.option }}'
+      value: '{{ item.value }}'
+      create: true
+      no_extra_spaces: true
+  loop:
+      - {option: START_CHARGE_THRESH_BAT0, value: 75}
+      - {option: STOP_CHARGE_THRESH_BAT0, value: 80}
+      - {option: START_CHARGE_THRESH_BAT1, value: 75}
+      - {option: STOP_CHARGE_THRESH_BAT1, value: 80}
+      - {option: RESTORE_THRESHOLDS_ON_BAT, value: 1}
+  tags:
+      - tlp
+      - hyprwm
+
+- name: Enabling tlp using systemd
+  become: true
+  ansible.builtin.systemd_service:
+      name: tlp
+      scope: system
+      enabled: true
+      daemon_reload: true
+  tags:
+      - tlp
       - hyprwm

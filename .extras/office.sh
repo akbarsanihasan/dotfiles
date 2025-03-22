@@ -3,5 +3,5 @@
 source "./flatpak.sh"
 
 if command -v flatpak &>/dev/null; then
-    flatpak --user --noninteractive --assumeyes install org.libreoffice.LibreOffice
+    flatpak install --user --noninteractive --assumeyes org.onlyoffice.desktopeditors
 fi
