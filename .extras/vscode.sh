@@ -3,5 +3,8 @@
 source "./flatpak.sh"
 
 if command -v flatpak &>/dev/null; then
-    flatpak --user --noninteractive --assumeyes install com.visualstudio.code
+    if ! flatpak --user --noninteractive --assumeyes install com.visualstudio.code; then
+        echo -e "VSC*de installation failed"
+        exit 1
+    fi
 fi

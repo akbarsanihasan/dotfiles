@@ -3,5 +3,8 @@
 source "./flatpak.sh"
 
 if command -v flatpak &>/dev/null; then
-    flatpak install --user --noninteractive --assumeyes org.onlyoffice.desktopeditors
+    if ! flatpak install --user --noninteractive --assumeyes org.onlyoffice.desktopeditors; then
+        echo -e "Office installation failed"
+        exit 1
+    fi
 fi

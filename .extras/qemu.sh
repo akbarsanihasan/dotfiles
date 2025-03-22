@@ -31,12 +31,18 @@ QEMU_DEB_PACKAGES=(
 )
 
 if command -v pacman &>/dev/null; then
-    sudo pacman -Sy --noconfirm "${QEMU_ARCH_PACKAGES[@]}"
+    if ! sudo pacman -Sy --noconfirm "${QEMU_ARCH_PACKAGES[@]}"; then
+        echo -e "Qemu installation failed"
+        exit 1
+    fi
 fi
 
 if command -v apt-get &>/dev/null; then
     sudo-get apt-get install -y
-    sudo apt-get "${QEMU_DEB_PACKAGES[@]}"
+    if ! sudo apt-get "${QEMU_DEB_PACKAGES[@]}"; then
+        echo -e "Qemu installation failed"
+        exit 1
+    fi
 fi
 
 echo "options kvm_intel nested=1" | sudo tee /etc/modprobe.d/kvm.conf

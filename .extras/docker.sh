@@ -50,7 +50,10 @@ fi
 # Main installation
 if command -v pacman &>/dev/null; then
     sudo pacman -Sy
-    sudo pacman -S --noconfirm docker iptables-nft docker-compose docker-buildx
+    if ! sudo pacman -S --noconfirm docker iptables-nft docker-compose docker-buildx; then
+        echo -e "Docker installation failed"
+        exit 1
+    fi
 fi
 
 if command -v apt-get &>/dev/null; then
@@ -66,7 +69,10 @@ if command -v apt-get &>/dev/null; then
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
         sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
     sudo apt-get update
-    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    if ! sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin; then
+        echo -e "Docker installation failed"
+        exit 1
+    fi
 fi
 
 getent group docker || sudo groupadd docker

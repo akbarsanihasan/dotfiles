@@ -3,5 +3,8 @@
 source "./flatpak.sh"
 
 if command -v flatpak &>/dev/null; then
-    flatpak --user --noninteractive --assumeyes install org.gimp.GIMP
+    if ! flatpak --user --noninteractive --assumeyes install org.gimp.GIMP; then
+        echo -e "Gimp installation failed"
+        exit 1
+    fi
 fi
