@@ -1,0 +1,20 @@
+- name: Installing rust
+  ansible.builtin.shell: |
+      export RUSTUP_HOME={{ CACHE_DIR }}/rustup
+
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs |
+           sh -s -- -y --no-modify-path --no-update-default-toolchain
+
+      $HOME/.cargo/bin/rustup default stable
+  tags: rust
+
+- name: Setting rust environment
+  ansible.builtin.blockinfile:
+      path: '{{ HOME_DIR }}/.zshrc'
+      prepend_newline: true
+      marker: '# {mark} rust'
+      block: |
+          export RUSTUP_HOME="$HOME/.cache/rustup"
+          [ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
+  loop: [.zshrc, .bashrc]
+  tags: rust

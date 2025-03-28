@@ -1,0 +1,102 @@
+- name: Installing flameshot dependencies for Debian
+  become: true
+  when: ansible_facts.os_family == DEB
+  ansible.builtin.apt:
+      update_cache: true
+      state: present
+      name:
+          - grim
+          - libkf5guiaddons-dev
+          - qtbase5-dev
+          - qttools5-dev-tools
+          - qttools5-dev
+          - libqt5dbus5
+          - libqt5network5
+          - libqt5core5a
+          - libqt5widgets5
+          - libqt5gui5
+          - libqt5svg5-dev
+  tags:
+      - flameshot
+      - common
+
+- name: Installing flameshot dependencies for Archlinux
+  become: true
+  when: ansible_facts.os_family == ARCH
+  community.general.pacman:
+      update_cache: true
+      state: present
+      name:
+          - grim
+          - kguiaddons5
+          - qt5-base
+          - qt5-tools
+          - hicolor-icon-theme
+          - qt5-svg
+  tags:
+      - flameshot
+      - common
+
+- name: Downloading flameshot source
+  ansible.builtin.git:
+      repo: https://github.com/flameshot-org/flameshot.git
+      dest: '{{ DOTFILES_CACHE_DIR }}/flameshot'
+      # version: '{{ FLAMESHOT_VERSION }}'
+      depth: 1
+      recursive: true
+      update: false
+  tags:
+      - flameshot
+      - common
+
+- name: Compiling flameshot
+  ansible.builtin.shell: |
+      cd {{ DOTFILES_CACHE_DIR }}/flameshot
+
+      cmake --no-warn-unused-cli \
+            -S. \
+            -Bbuild \
+            -GNinja \
+            -DCMAKE_PREFIX_PATH=/usr/local \
+            -DUSE_WAYLAND_CLIPBOARD=1 \
+            -DUSE_WAYLAND_GRIM=true \
+            -DQt5_DIR=$(brew --prefix qt5)/lib/cmake/Qt5 \
+            -DCMAKE_BUILD_TYPE=Release 
+
+      cmake --build ./build \
+            --config Release \
+            --target all \
+            -j$(nproc 2>/dev/null || getconf _NPROCESSORS_CONF)
+  tags:
+      - flameshot
+      - common
+
+- name: Installing flameshot
+  become: true
+  ansible.builtin.shell: |
+      cd {{ DOTFILES_CACHE_DIR }}/flameshot
+      cmake --install ./build
+  tags:
+      - flameshot
+      - common
+
+- name: Creating flameshot save location
+  ansible.builtin.file:
+      dest: '{{ HOME_DIR }}/Pictures/Screenshot'
+      state: directory
+  tags:
+      - flameshot
+      - common
+
+- name: Setting flameshot save location
+  ansible.builtin.ini_file:
+      path: '{{ CONFIG_DIR }}/flameshot/flameshot.ini'
+      section: General
+      option: 'savePath'
+      value: '{{ HOME_DIR }}/Pictures/Screenshot'
+      state: present
+      create: true
+      no_extra_spaces: true
+  tags:
+      - flameshot
+      - common

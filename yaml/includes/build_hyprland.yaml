@@ -1,0 +1,34 @@
+- name: Downloading {{ hypr_name }} source version {{ hypr_version | default(omit) }}
+  ansible.builtin.git:
+      repo: '{{ hypr_repo }}'
+      dest: '{{ hypr_dest }}'
+      version: '{{ hypr_version | default(omit) }}'
+      depth: 1
+      recursive: true
+      update: false
+  tags: '{{ hypr_tags }}'
+
+- name: Compiling {{ hypr_name }}
+  ansible.builtin.shell: |
+      cd {{ hypr_dest }}
+
+      cmake --no-warn-unused-cli \
+            -Bbuild \
+            -S. \
+            -GNinja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH=/usr/local \
+            -DINSTALL_QML_PREFIX=/lib/qt6/qml
+
+      cmake --build ./build \
+            --config Release \
+            --target all \
+            -j$(nproc 2>/dev/null || getconf _NPROCESSORS_CONF)
+  tags: '{{ hypr_tags }}'
+
+- name: Installing {{ hypr_name }}
+  become: true
+  ansible.builtin.shell: |
+      cd {{ hypr_dest }}
+      cmake --install ./build
+  tags: '{{ hypr_tags }}'

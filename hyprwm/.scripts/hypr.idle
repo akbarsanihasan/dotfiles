@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+muted=$(wpctl get-volume @DEFAULT_SINK@ | grep -i "mute")
+
+toggle() {
+    if systemctl --user is-active hypridle; then
+        notify-send -a "idle" \
+            -h string:x-canonical-private-synchronous:sys-notify \
+            "Hypridle turned off" \
+            "Device will not sleep"
+
+        systemctl --user stop hypridle
+    else
+        notify-send -a "idle" \
+            -h string:x-canonical-private-synchronous:sys-notify \
+            "Hypridle turned on" \
+            "Device will sleep"
+
+        systemctl --user restart hypridle
+    fi
+}
+
+lock() {
+    if [[ -z "$(pidof hyprlock)" ]]; then
+        brightnessctl -r
+        wpctl set-mute @DEFAULT_SINK@ 1
+        hyprlock -q
+
+        if [[ -z "$muted" ]]; then
+            wpctl set-mute @DEFAULT_SINK@ 0
+        fi
+    fi
+}
+
+resume() {
+    hyprctl dispatch dpms on
+    brightnessctl -r
+    if [[ -z "$muted" ]]; then
+        wpctl set-mute @DEFAULT_SINK@ 0
+    fi
+}
+
+case "$1" in
+toggle) toggle ;;
+lock) lock ;;
+resume) resume ;;
+esac

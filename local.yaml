@@ -1,0 +1,34 @@
+- hosts: all
+  gather_facts: true
+  vars_files:
+      - ./yaml/variables.yaml
+      - ./yaml/versions.yaml
+  pre_tasks:
+      - import_tasks: ./yaml/tasks/setup_tools.yaml
+      - import_tasks: ./yaml/tasks/setup_directory.yaml
+      - import_tasks: ./yaml/tasks/setup_personal.yaml
+  tasks:
+      - import_tasks: ./yaml/tasks/dotfiles.yaml
+      - import_tasks: ./yaml/tasks/nodejs.yaml
+      - import_tasks: ./yaml/tasks/php.yaml
+      - import_tasks: ./yaml/tasks/golang.yaml
+      - import_tasks: ./yaml/tasks/rust.yaml
+
+      - import_tasks: ./yaml/tasks/common/packages.yaml
+      - import_tasks: ./yaml/tasks/common/app.yaml
+      - import_tasks: ./yaml/tasks/common/browser.yaml
+      - import_tasks: ./yaml/tasks/common/nerdfonts.yaml
+      - import_tasks: ./yaml/tasks/common/neovim.yaml
+      - import_tasks: ./yaml/tasks/common/git.yaml
+      - import_tasks: ./yaml/tasks/common/flameshot.yaml
+
+      - import_tasks: ./yaml/tasks/hyprwm/hyprland.git.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/uwsm.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/packages.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/pipewire.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/bluetooth.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/rofi.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/swaync.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/waybar.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/fcitx.yaml
+      - import_tasks: ./yaml/tasks/hyprwm/theme.yaml

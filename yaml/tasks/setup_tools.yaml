@@ -1,0 +1,51 @@
+- name: Installing common tools packages for Debian
+  become: true
+  when: ansible_facts.os_family == DEB
+  ansible.builtin.apt:
+      update_cache: true
+      state: present
+      name:
+          - openssh-client
+          - build-essential
+          - meson
+          - ninja-build
+          - make
+          - cmake
+          - autoconf
+          - automake
+          - libtool
+          - m4
+          - extra-cmake-modules
+          - ccache
+          - curl
+          - wget
+          - tar
+          - zip
+          - unzip
+          - unrar
+          - p7zip-full
+  tags: tools
+
+- name: Installing common tools packages for Archlinux
+  become: true
+  when: ansible_facts.os_family == ARCH
+  community.general.pacman:
+      update_cache: true
+      state: present
+      name:
+          - openssh
+          - base-devel
+          - meson
+          - ninja
+          - make
+          - cmake
+          - extra-cmake-modules
+          - ccache
+          - curl
+          - wget
+          - tar
+          - zip
+          - unzip
+          - unrar
+          - p7zip
+  tags: tools
