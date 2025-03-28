@@ -16,6 +16,7 @@
           - brightnessctl
           - libupower-glib-dev
           - gobject-introspection
+          - gir1.2-ayatanaappindicator3-0.1
           - libdbusmenu-gtk3-dev
           - libevdev-dev
           - libfmt-dev
