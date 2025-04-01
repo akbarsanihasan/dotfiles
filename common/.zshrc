@@ -27,6 +27,9 @@ fi
 if command -v batcat &>/dev/null; then
     alias cat="batcat --color always --plain --theme=Catppuccin_Mocha"
 fi
+if command -v fdfind &>/dev/null; then
+    alias fd="fdfind"
+fi
 alias ..='cd ..'
 alias grep='grep --color=auto'
 alias l="ls -l"
