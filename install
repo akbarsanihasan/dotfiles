@@ -3,7 +3,7 @@
 set -euo pipefail
 
 if [[ $# -gt 0 ]] && [[ $1 == "--clean" ]]; then
-    rm -rf "$HOME/.cache/dotfiles/"
+    rm -rf "./.cache"
     shift 1
 fi
 
@@ -65,7 +65,7 @@ setup_arch() {
     sudo timedatectl set-ntp true
 
     if ! [[ -f /etc/ld.so.conf.d/local.conf ]]; then
-        echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/local.conf
+        echo "/usr/local/lib" | sudo tee /etc/ld.so.conf.d/libc.conf &>/dev/null
         sudo ldconfig
     fi
 
@@ -150,4 +150,8 @@ if [[ -n $OS ]]; then
     if ! ansible-playbook local.yaml "${ANSIBLE_ARGS[@]}" "${@}"; then
         exit 1
     fi
+fi
+
+if ! git remote get-url origin | grep -i "git@" &>/dev/null; then
+    git remote set-url origin git@github.com:akbarsanihasan/dotfiles.git
 fi
