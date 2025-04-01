@@ -60,7 +60,9 @@
             -DCMAKE_PREFIX_PATH=/usr/local \
             -DUSE_WAYLAND_CLIPBOARD=1 \
             -DUSE_WAYLAND_GRIM=true \
-            -DCMAKE_BUILD_TYPE=Release 
+            -DQt5_DIR=$(brew --prefix qt5)/lib/cmake/Qt5 \
+            -DCMAKE_BUILD_TYPE=Release \ 
+            -DCMAKE_POLICY_VERSION_MINIMUM
 
       cmake --build ./build \
             --config Release \
