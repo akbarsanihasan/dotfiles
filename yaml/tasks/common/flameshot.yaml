@@ -53,6 +53,11 @@
   ansible.builtin.shell: |
       cd {{ DOTFILES_CACHE_DIR }}/flameshot
 
+      QT5_DIR=""
+      if command -v brew >/dev/null; then
+          QT5_DIR="-DQt5_DIR=$(brew --prefix qt5)/lib/cmake/Qt5"
+      fi
+
       cmake --no-warn-unused-cli \
             -S. \
             -Bbuild \
@@ -60,9 +65,9 @@
             -DCMAKE_PREFIX_PATH=/usr/local \
             -DUSE_WAYLAND_CLIPBOARD=1 \
             -DUSE_WAYLAND_GRIM=true \
-            -DQt5_DIR=$(brew --prefix qt5)/lib/cmake/Qt5 \
             -DCMAKE_BUILD_TYPE=Release \ 
-            -DCMAKE_POLICY_VERSION_MINIMUM
+            -DCMAKE_POLICY_VERSION_MINIMUM \
+            $QT5_DIR
 
       cmake --build ./build \
             --config Release \
