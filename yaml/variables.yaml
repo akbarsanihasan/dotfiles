@@ -8,3 +8,5 @@ DOTFILES_CACHE_DIR: '{{ playbook_dir }}/.cache'
 
 DEB: 'Debian'
 ARCH: 'Archlinux'
+
+GTK_THEME: 'Colloid-Purple-Dark-Compact-Catppuccin'

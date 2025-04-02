@@ -4,9 +4,9 @@
       - ./yaml/variables.yaml
       - ./yaml/versions.yaml
   pre_tasks:
-      - import_tasks: ./yaml/tasks/setup_tools.yaml
-      - import_tasks: ./yaml/tasks/setup_directory.yaml
-      - import_tasks: ./yaml/tasks/setup_personal.yaml
+      - import_tasks: ./yaml/tasks/pre/directory.yaml
+      - import_tasks: ./yaml/tasks/pre/tools.yaml
+      - import_tasks: ./yaml/tasks/pre/personal.yaml
   tasks:
       - import_tasks: ./yaml/tasks/dotfiles.yaml
       - import_tasks: ./yaml/tasks/nodejs.yaml

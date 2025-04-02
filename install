@@ -35,10 +35,10 @@ setup_debian() {
         echo -e "# Sources list modified $(date)" | sudo tee -a /etc/apt/sources.list.d/debian.sources
     fi
 
-    if ! [[ -f /etc/apt/sources.list.d/backports.lists ]] && [[ ! -f /etc/apt/sources.list.d/backports.sources ]]; then
-        echo "deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list.d/backports.list
-        sudo apt modernize-sources -y
-    fi
+    #    if ! [[ -f /etc/apt/sources.list.d/backports.lists ]] && [[ ! -f /etc/apt/sources.list.d/backports.sources ]]; then
+    #       echo "deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list.d/backports.list
+    #       sudo apt modernize-sources -y
+    #   fi
 
     sudo apt-get update -y
     if apt list --upgradable; then
@@ -137,8 +137,8 @@ arch)
 esac
 
 if [[ $ISANSIBLE == "$ERROR" ]]; then
-    echo -e "* Installing ansible"
-    if ! pipx install --include-deps ansible==$ANSIBLE_VERSION 2>"$LOGFILE"; then
+    clear
+    if ! pipx install --include-deps ansible==$ANSIBLE_VERSION; then
         clear
         echo -e "$ERROR, Failed to install ansible $ANSIBLE_VERSION, see log $LOGFILE"
         exit 1

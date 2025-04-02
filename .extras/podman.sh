@@ -5,7 +5,7 @@ clear
 if ! command -v podman &>/dev/null; then
     if command -v pacman &>/dev/null; then
         sudo pacman -Sy
-        if ! sudo pacman -S --noconfirm podman; then
+        if ! sudo pacman -S --noconfirm podman crun; then
             echo -e "Failed to install podman"
             exit 1
         fi
@@ -13,7 +13,7 @@ if ! command -v podman &>/dev/null; then
 
     if command -v apt-get &>/dev/null; then
         sudo apt-get update -y
-        if ! sudo apt-get install -y podman; then
+        if ! sudo apt-get install -y podman crun; then
             echo -e "Failed to install podman"
             exit 1
         fi

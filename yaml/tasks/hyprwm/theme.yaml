@@ -106,8 +106,8 @@
 
 - name: Applying gtk theme
   ansible.builtin.shell: |
-      gsettings set org.gnome.desktop.interface gtk-theme 'Colloid-Purple-Dark-Compact-Catppuccin'
-      gsettings set org.gnome.desktop.wm.preferences theme 'Colloid-Purple-Dark-Compact-Catppuccin'
+      gsettings set org.gnome.desktop.interface gtk-theme '{{ GTK_THEME }}'
+      gsettings set org.gnome.desktop.wm.preferences theme '{{ GTK_THEME }}'
       gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
       gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
       gsettings set org.gnome.desktop.interface cursor-theme 'Adwaita'
