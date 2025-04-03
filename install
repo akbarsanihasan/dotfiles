@@ -35,11 +35,6 @@ setup_debian() {
         echo -e "# Sources list modified $(date)" | sudo tee -a /etc/apt/sources.list.d/debian.sources
     fi
 
-    #    if ! [[ -f /etc/apt/sources.list.d/backports.lists ]] && [[ ! -f /etc/apt/sources.list.d/backports.sources ]]; then
-    #       echo "deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main contrib non-free non-free-firmware" | sudo tee -a /etc/apt/sources.list.d/backports.list
-    #       sudo apt modernize-sources -y
-    #   fi
-
     sudo apt-get update -y
     if apt list --upgradable; then
         sudo apt-get upgrade -y
