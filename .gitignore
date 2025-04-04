@@ -14,5 +14,4 @@
 /hyprwm/.config/gtk-4.0/*
 !/hyprwm/.config/gtk-4.0/settings.ini
 
-/hyprwm/.config/fcitx5/profile
 /hyprwm/.config/fcitx5/conf/cached_layouts

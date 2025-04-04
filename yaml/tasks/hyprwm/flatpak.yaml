@@ -1,0 +1,76 @@
+- name: Installing linux additional packages for Debian
+  become: true
+  when: ansible_facts.os_family == DEB
+  ansible.builtin.apt:
+      update_cache: true
+      state: present
+      install_recommends: false
+      name: flatpak
+  tags:
+      - flatpak
+      - hyprwm
+
+- name: Installing linux additional package for Archlinux
+  become: true
+  when: ansible_facts.os_family == ARCH
+  community.general.pacman:
+      update_cache: true
+      state: present
+      name: flatpak
+  tags:
+      - flatpak
+      - hyprwm
+
+- name: Adding the flatpak repository remote
+  community.general.flatpak_remote:
+      name: flathub
+      flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+      state: present
+      method: user
+  tags:
+      - flatpak
+      - hyprwm
+
+- name: Installing app using flatpak
+  community.general.flatpak:
+      method: user
+      state: present
+      name:
+          - com.github.tchx84.Flatseal
+          - com.google.Chrome
+          - md.obsidian.Obsidian
+  tags:
+      - flatpak
+      - hyprwm
+
+- name: Configuring flatpak
+  ansible.builtin.shell: |
+      flatpak override --user --allow=bluetooth
+
+      flatpak override --user --device=dri
+      flatpak override --user --device=input
+      flatpak override --user --device=shm
+      flatpak override --user --device=all
+
+      flatpak override --user --socket=x11
+      flatpak override --user --socket=wayland
+      flatpak override --user --socket=pulseaudio
+      flatpak override --user --socket=session-bus
+      flatpak override --user --socket=system-bus
+      flatpak override --user --socket=ssh-auth
+      flatpak override --user --socket=inherit-wayland-socket
+
+      flatpak override --user --filesystem=home
+      flatpak override --user --filesystem=xdg-config/gtk-3.0:ro
+      flatpak override --user --filesystem=xdg-config/gtk-4.0:ro
+      flatpak override --user --filesystem=xdg-config/Kvantum:ro
+      flatpak override --user --filesystem=xdg-data/themes:ro
+      flatpak override --user --filesystem=xdg-data/fonts:ro
+
+      flatpak override --user --env=QT_STYLE_OVERRIDE=kvantum
+      flatpak override --user --env=QT_QPA_PLATFORM="wayland;xcb"
+      flatpak override --user --env=ELECTRON_OZONE_PLATFORM_HINT=auto
+      flatpak override --user --env=GTK_THEME="{{ GTK_THEME }}"
+  tags:
+      - flatpak
+      - hyprwm

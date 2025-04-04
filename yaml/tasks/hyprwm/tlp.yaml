@@ -1,0 +1,101 @@
+- name: Installing linux additional packages for Debian
+  become: true
+  when: ansible_facts.os_family == DEB
+  ansible.builtin.apt:
+      update_cache: true
+      state: present
+      install_recommends: false
+      name: tlp
+  tags:
+      - tlp
+      - hyprwm
+
+- name: Installing linux additional package for Archlinux
+  become: true
+  when: ansible_facts.os_family == ARCH
+  community.general.pacman:
+      update_cache: true
+      state: present
+      name: tlp
+  tags:
+      - tlp
+      - hyprwm
+
+- name: Configuring udiskie mountpoint
+  become: true
+  ansible.builtin.lineinfile:
+      path: '{{ item.path }}'
+      line: '{{ item.line }}'
+      regexp: '{{ item.regexp }}'
+      state: present
+      create: true
+  loop:
+      - {
+            path: /etc/tmpfiles.d/media.conf,
+            line: D /media 0755 root root 0 -,
+            regexp: '^D\s*\/media.*root',
+        }
+      - {
+            path: /etc/udev/rules.d/99-udisks2.rules,
+            line: 'ENV{ID_FS_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="1"',
+            regexp: '^ENV{ID_FS_USAGE}==',
+        }
+  tags:
+      - tlp
+      - hyprwm
+
+- name: Configuring udiskie mount options
+  become: true
+  ansible.builtin.ini_file:
+      path: /etc/udisks2/mount_options.conf
+      section: defaults
+      option: '{{ item.option }}'
+      value: '{{ item.value }}'
+      state: present
+      create: true
+  loop:
+      - {
+            option: exfat_defaults,
+            value: 'uid=$UID,gid=$GID,iocharset=utf8,errors=remount-ro,sync',
+        }
+      - {
+            option: exfat_allow,
+            value: 'uid=$UID,gid=$GID,flush,dmask,errors,fmask,iocharset,namecase,umask,sync',
+        }
+      - {option: ntfs:ntfs3_defaults, value: 'uid=\$UID,gid=\$GID'}
+      - {
+            option: ntfs:ntfs3_allow,
+            value: 'uid=$UID,gid=$GID,flush,umask,dmask,fmask,iocharset,discard,nodiscard,sparse,nosparse,hidden,nohidden,sys_immutable,nosys_immutable,showmeta,noshowmeta,prealloc,noprealloc,hide_dot_files,nohide_dot_files,windows_names,nocase,case',
+        }
+  tags:
+      - tlp
+      - hyprwm
+
+- name: Configuring tlp options
+  become: true
+  ansible.builtin.ini_file:
+      path: /etc/tlp.conf
+      option: '{{ item.option }}'
+      value: '{{ item.value }}'
+      create: true
+      no_extra_spaces: true
+  loop:
+      - {option: START_CHARGE_THRESH_BAT0, value: 75}
+      - {option: STOP_CHARGE_THRESH_BAT0, value: 80}
+      - {option: START_CHARGE_THRESH_BAT1, value: 75}
+      - {option: STOP_CHARGE_THRESH_BAT1, value: 80}
+      - {option: RESTORE_THRESHOLDS_ON_BAT, value: 1}
+  tags:
+      - tlp
+      - hyprwm
+
+- name: Enabling tlp using systemd
+  become: true
+  ansible.builtin.systemd_service:
+      name: tlp
+      scope: system
+      enabled: true
+      daemon_reload: true
+  tags:
+      - tlp
+      - hyprwm

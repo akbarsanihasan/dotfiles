@@ -97,15 +97,12 @@
 
 - name: Compiling rofi library
   ansible.builtin.shell: |
+      export PKG_CONFIG_PATH: "/usr/local/lib/pkgconfig:{{ ansible_env.PKG_CONFIG_PATH | default('') }}"
       cd {{ DOTFILES_CACHE_DIR }}/{{ item }}
       autoreconf -i
       ./configure --prefix=/usr/local
       make
-  environment:
-      - PKG_CONFIG_PATH: "/usr/local/lib/pkgconfig:{{ ansible_env.PKG_CONFIG_PATH | default('') }}"
-  loop:
-      - rofi-calc
-      - rofi-emoji
+  loop: [rofi-calc, rofi-emoji]
   tags:
       - rofi
       - hyprwm
@@ -115,9 +112,7 @@
   ansible.builtin.shell: |
       cd {{ DOTFILES_CACHE_DIR }}/{{ item }}
       make install
-  loop:
-      - rofi-calc
-      - rofi-emoji
+  loop: [rofi-calc, rofi-emoji]
   tags:
       - rofi
       - hyprwm
