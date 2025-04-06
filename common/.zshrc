@@ -83,3 +83,30 @@ export PATH="$HOME/.local/share/flatpak/exports/bin:$PATH"
 for dir in $HOME/.scripts/**/; do
     PATH="$dir:$PATH"
 done
+
+export NVM_DIR="$HOME/.node"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# BEGIN nodejs
+export NVM_DIR="$HOME/.node"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# END nodejs
+
+# BEGIN php
+export PATH="$HOME/.php/bin:$PATH"
+export COMPOSER_HOME="$HOME/.php"
+export COMPOSER_BIN_DIR="$HOME/.php/bin"
+# END php
+
+# BEGIN go
+export GOPATH="$HOME/.go"
+export PATH="$PATH:$GOPATH/version/go1.24.1/bin"
+export PATH="$PATH:$GOPATH/bin"
+# END go
+
+# BEGIN rust
+export RUSTUP_HOME="$HOME/.cache/rustup"
+[ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
+# END rust

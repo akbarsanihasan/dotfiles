@@ -9,7 +9,7 @@
       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
       nvm install --lts
-      npm config set cache=$NVIM_DIR/.cache
+      npm config set cache=$NVM_DIR/.cache
   tags: nodejs
 
 - name: Configuring nodejs environment
@@ -22,4 +22,4 @@
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
           [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
   loop: [.zshrc, .bashrc]
-  tags: rust
+  tags: nodejs
