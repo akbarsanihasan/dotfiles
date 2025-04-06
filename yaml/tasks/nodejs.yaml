@@ -9,7 +9,6 @@
       [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
       nvm install --lts
-      npm config set cache=$NVM_DIR/.cache
   tags: nodejs
 
 - name: Configuring nodejs environment
@@ -19,6 +18,7 @@
       marker: '# {mark} nodejs'
       block: |
           export NVM_DIR="$HOME/.node"
+          export NPM_CONFIG_CACHE=$NVM_DIR/.cache
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
           [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
   loop: [.zshrc, .bashrc]

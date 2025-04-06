@@ -85,11 +85,12 @@ for dir in $HOME/.scripts/**/; do
 done
 
 export NVM_DIR="$HOME/.node"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 # BEGIN nodejs
 export NVM_DIR="$HOME/.node"
+export NPM_CONFIG_CACHE=$NVM_DIR/.cache
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 # END nodejs
@@ -98,6 +99,7 @@ export NVM_DIR="$HOME/.node"
 export PATH="$HOME/.php/bin:$PATH"
 export COMPOSER_HOME="$HOME/.php"
 export COMPOSER_BIN_DIR="$HOME/.php/bin"
+export PHP_CS_FIXER_IGNORE_ENV=true
 # END php
 
 # BEGIN go
