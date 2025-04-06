@@ -83,20 +83,3 @@ export PATH="$HOME/.local/share/flatpak/exports/bin:$PATH"
 for dir in $HOME/.scripts/**/; do
     PATH="$dir:$PATH"
 done
-
-# BEGIN nodejs
-export NVM_DIR="$HOME/.node"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-# END nodejs
-
-# BEGIN rust
-export RUSTUP_HOME="$HOME/.cache/rustup"
-[ -s "$HOME/.cargo/env" ] && \. "$HOME/.cargo/env"
-# END rust
-
-# BEGIN go
-export GOPATH="$HOME/.go"
-export PATH="$PATH:$GOPATH/version/go1.24.1/bin"
-export PATH="$PATH:$GOPATH/bin"
-# END go

@@ -1,15 +1,18 @@
 - name: Installing nodejs
   ansible.builtin.shell: |
       export NVM_DIR="$HOME/.node"
+
       mkdir -p $NVM_DIR
       curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 
-      . {{ HOME_DIR }}/.node/nvm.sh
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
       nvm install --lts
+      npm config set cache=$NVIM_DIR/.cache
   tags: nodejs
 
-- name: Setting nodejs environment
+- name: Configuring nodejs environment
   ansible.builtin.blockinfile:
       path: '{{ HOME_DIR }}/.zshrc'
       prepend_newline: true

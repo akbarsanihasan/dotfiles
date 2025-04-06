@@ -1,20 +1,34 @@
-- name: Installing php for Debian
-  become: true
-  when: ansible_facts.os_family == DEB
-  ansible.builtin.apt:
-      update_cache: true
-      state: present
-      install_recommends: false
-      name: [php, composer]
-  tags:
-      - php
+- name: Downloading php for linux
+  ansible.builtin.get_url:
+      url: 'https://download.herdphp.com/herd-lite/{{ item.url }}'
+      dest: '{{ DOTFILES_CACHE_DIR }}/{{ item.dest }}'
+  loop:
+      - {url: linux/x64/8.4/php, dest: php}
+      - {url: composer, dest: composer}
+  tags: php
 
-- name: Installing php for Archlinux
-  become: true
-  when: ansible_facts.os_family == ARCH
-  community.general.pacman:
-      update_cache: true
-      state: present
-      name: [php, composer]
-  tags:
-      - php
+- name: Creating php installation location
+  ansible.builtin.file:
+      dest: '{{ HOME_DIR }}/.php/bin'
+      state: directory
+  tags: php
+
+- name: Installing php
+  ansible.builtin.copy:
+      src: '{{ DOTFILES_CACHE_DIR }}/{{ item }}'
+      dest: '{{ HOME_DIR }}/.php/bin'
+      mode: 0777
+  loop: [php, composer]
+  tags: php
+
+- name: Configuring php environment
+  ansible.builtin.blockinfile:
+      path: '{{ HOME_DIR }}/.zshrc'
+      prepend_newline: true
+      marker: '# {mark} php'
+      block: |
+          export PATH="$HOME/.php/bin:$PATH"
+          export COMPOSER_HOME="$HOME/.php"
+          export COMPOSER_BIN_DIR="$HOME/.php/bin"
+  loop: [.zshrc, .bashrc]
+  tags: php
