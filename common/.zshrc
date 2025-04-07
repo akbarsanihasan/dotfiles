@@ -1,6 +1,6 @@
 if [[ -z "$TMUX" ]]; then
-    if uwsm check may-start &>/dev/null; then
-        exec uwsm start hyprland.desktop
+    if uwsm check may-start &>/dev/null && uwsm select; then
+        exec uwsm start default
     fi
 fi
 
