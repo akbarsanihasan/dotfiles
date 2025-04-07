@@ -7,14 +7,14 @@
 
 - name: Creating go installation path
   ansible.builtin.file:
-      dest: '{{ HOME_DIR }}/.go/version/go{{ GO_VERSION }}'
+      dest: '{{ HOME_DIR }}/.go/versions/go{{ GO_VERSION }}'
       state: directory
   tags: go
 
 - name: Extracting go for Linux
   ansible.builtin.unarchive:
       src: '{{ DOTFILES_CACHE_DIR }}/go.tar.gz'
-      dest: '{{ HOME_DIR }}/.go/version/go{{ GO_VERSION }}'
+      dest: '{{ HOME_DIR }}/.go/versions/go{{ GO_VERSION }}'
       extra_opts: [--strip-components=1]
   tags: go
 
@@ -25,7 +25,7 @@
       marker: '# {mark} go'
       block: |
           export GOPATH="$HOME/.go"
-          export PATH="$PATH:$GOPATH/version/go{{ GO_VERSION }}/bin"
+          export PATH="$PATH:$GOPATH/versions/go{{ GO_VERSION }}/bin"
           export PATH="$PATH:$GOPATH/bin"
   loop: [.zshrc, .bashrc]
   tags: go

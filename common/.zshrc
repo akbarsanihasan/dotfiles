@@ -84,15 +84,14 @@ for dir in $HOME/.scripts/**/; do
     PATH="$dir:$PATH"
 done
 
-export NVM_DIR="$HOME/.node"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
 # BEGIN nodejs
-export NVM_DIR="$HOME/.node"
-export NPM_CONFIG_CACHE=$NVM_DIR/.cache
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+export PATH="$HOME/.node/manager/bin:$PATH"
+export NPM_CONFIG_CACHE=$HOME/.node
+export NPM_CONFIG_PREFIX=$HOME/.node
+if command -v fnm &>/dev/null; then
+   eval "$(fnm env --shell zsh)"
+fi
+export FNM_DIR=$HOME/.node/manager
 # END nodejs
 
 # BEGIN php
@@ -103,7 +102,7 @@ export PHP_CS_FIXER_IGNORE_ENV=true
 
 # BEGIN go
 export GOPATH="$HOME/.go"
-export PATH="$PATH:$GOPATH/version/go1.24.1/bin"
+export PATH="$PATH:$GOPATH/versions/go1.24.1/bin"
 export PATH="$PATH:$GOPATH/bin"
 # END go
 
