@@ -98,7 +98,6 @@ export NPM_CONFIG_CACHE=$NVM_DIR/.cache
 # BEGIN php
 export PATH="$HOME/.php/bin:$PATH"
 export COMPOSER_HOME="$HOME/.php"
-export COMPOSER_BIN_DIR="$HOME/.php/bin"
 export PHP_CS_FIXER_IGNORE_ENV=true
 # END php
 
