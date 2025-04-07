@@ -253,7 +253,7 @@
       - hyprland
       - hyprwm
 
-- name: Starting hyprwm application service using systemd
+- name: Enabling hyprwm application service using systemd
   ansible.builtin.systemd_service:
       name: '{{ item.name }}'
       scope: '{{ item.scope }}'

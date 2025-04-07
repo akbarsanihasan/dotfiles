@@ -13,6 +13,7 @@
           - libgtk-layer-shell-dev
           - dbus
           - libglib2.0-dev
+          - systemd-dev
           - gobject-introspection
           - libgee-0.8-dev
           - libjson-glib-dev
@@ -81,16 +82,7 @@
       - swaync
       - hyprwm
 
-- name: Installing swaync service
-  become: true
-  ansible.builtin.copy:
-      src: '{{ DOTFILES_CACHE_DIR }}/swaync/build/swaync.service'
-      dest: '/usr/local/lib/systemd/user/'
-  tags:
-      - swaync
-      - hyprwm
-
-- name: Enable swaync service using systemd
+- name: Enabling swaync service using systemd
   ansible.builtin.systemd_service:
       name: swaync
       scope: user

@@ -110,7 +110,7 @@
       - waybar
       - hyprwm
 
-- name: Enable waybar service using systemd
+- name: Enabling waybar service using systemd
   ansible.builtin.systemd_service:
       name: waybar
       scope: user
