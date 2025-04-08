@@ -1,4 +1,4 @@
-- name: Installing linux additional packages for Debian
+- name: Installing flatpak for Debian
   become: true
   when: ansible_facts.os_family == DEB
   ansible.builtin.apt:
@@ -10,7 +10,7 @@
       - flatpak
       - hyprwm
 
-- name: Installing linux additional package for Archlinux
+- name: Installing flatpak for Archlinux
   become: true
   when: ansible_facts.os_family == ARCH
   community.general.pacman:
@@ -21,11 +21,11 @@
       - flatpak
       - hyprwm
 
-- name: Adding the flatpak repository remote
+- name: Adding flatpak repository remote
   community.general.flatpak_remote:
-      name: flathub
-      flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-      state: present
+      name: flathub,
+      flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo,
+      state: present,
       method: user
   tags:
       - flatpak
@@ -35,10 +35,12 @@
   community.general.flatpak:
       method: user
       state: present
-      name:
-          - com.github.tchx84.Flatseal
-          - com.google.Chrome
-          - md.obsidian.Obsidian
+      remote: flathub
+      name: '{{ item }}'
+  loop:
+      - md.obsidian.Obsidian
+      - com.github.tchx84.Flatseal
+      - com.google.Chrome
   tags:
       - flatpak
       - hyprwm

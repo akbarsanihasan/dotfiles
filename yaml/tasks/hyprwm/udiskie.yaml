@@ -1,4 +1,4 @@
-- name: Installing linux additional packages for Debian
+- name: Installing udiskie for Debian
   become: true
   when: ansible_facts.os_family == DEB
   ansible.builtin.apt:
@@ -10,7 +10,7 @@
       - udiskie
       - hyprwm
 
-- name: Installing linux additional package for Archlinux
+- name: Installing udiskie for Archlinux
   become: true
   when: ansible_facts.os_family == ARCH
   community.general.pacman:
@@ -53,20 +53,13 @@
       value: '{{ item.value }}'
       state: present
       create: true
+      no_extra_spaces: true
   loop:
       - {
             option: exfat_defaults,
             value: 'uid=$UID,gid=$GID,iocharset=utf8,errors=remount-ro,sync',
         }
-      - {
-            option: exfat_allow,
-            value: 'uid=$UID,gid=$GID,flush,dmask,errors,fmask,iocharset,namecase,umask,sync',
-        }
-      - {option: ntfs:ntfs3_defaults, value: 'uid=\$UID,gid=\$GID'}
-      - {
-            option: ntfs:ntfs3_allow,
-            value: 'uid=$UID,gid=$GID,flush,umask,dmask,fmask,iocharset,discard,nodiscard,sparse,nosparse,hidden,nohidden,sys_immutable,nosys_immutable,showmeta,noshowmeta,prealloc,noprealloc,hide_dot_files,nohide_dot_files,windows_names,nocase,case',
-        }
+      - {option: ntfs:ntfs3_defaults, value: 'uid=$UID,gid=$GID'}
   tags:
       - udiskie
       - hyprwm
