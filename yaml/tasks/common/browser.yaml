@@ -29,17 +29,17 @@
   loop_control:
       label: '{{ item.dest }}'
   loop:
-      - dest: /usr/local/bin/zen
+      - dest: "{{ DATA_DIR }}/bin/zen"
         content: |
             #!/usr/bin/env bash
             exec /opt/zen/zen "$@"
-      - dest: /usr/local/share/applications/zen.desktop
+      - dest: "{{ DATA_DIR }}/share/applications/zen.desktop"
         content: |
             [Desktop Entry]
             Name=Zen Browser
             Comment=Experience tranquillity while browsing the web without people tracking you!
             Keywords=web;browser;internet
-            Exec=/usr/local/bin/zen %u
+            Exec={{ DATA_DIR }}/bin/zen %u
             Icon=/opt/zen/browser/chrome/icons/default/default128.png
             Terminal=false
             StartupNotify=true
@@ -51,13 +51,13 @@
             Actions=new-window;new-private-window;profile-manager-window;
             [Desktop Action new-window]
             Name=Open a New Window
-            Exec=/usr/local/bin/zen --new-window %u
+            Exec={{ DATA_DIR }}/bin/zen --new-window %u
             [Desktop Action new-private-window]
             Name=Open a New Private Window
-            Exec=/usr/local/bin/zen --private-window %u
+            Exec={{ DATA_DIR }}/bin/zen --private-window %u
             [Desktop Action profile-manager-window]
             Name=Open the Profile Manager
-            Exec=/usr/local/bin/zen --ProfileManager
+            Exec={{ DATA_DIR }}/bin/zen --ProfileManager
   tags:
       - browser
       - gui_apps

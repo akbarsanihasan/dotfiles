@@ -3,11 +3,14 @@
       dest: '{{ item }}'
       state: directory
   loop:
-      - '{{ DATA_DIR }}'
-      - '{{ CACHE_DIR }}'
       - '{{ CONFIG_DIR }}'
       - '{{ CONFIG_DIR }}/gtk-3.0'
       - '{{ CONFIG_DIR }}/gtk-4.0'
       - '{{ HOME_DIR }}/.scripts'
+      - '{{ DATA_DIR }}'
+      - '{{ DATA_DIR }}/bin'
+      - '{{ DATA_DIR }}/share'
+      - '{{ DATA_DIR }}/share/applications'
+      - '{{ CACHE_DIR }}'
       - '{{ DOTFILES_CACHE_DIR }}'
   tags: directory

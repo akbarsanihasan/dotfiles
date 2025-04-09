@@ -23,9 +23,9 @@
 
 - name: Adding flatpak repository remote
   community.general.flatpak_remote:
-      name: flathub,
-      flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo,
-      state: present,
+      name: flathub
+      flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+      state: present
       method: user
   tags:
       - flatpak
