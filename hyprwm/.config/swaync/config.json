@@ -1,9 +1,10 @@
 {
     "$schema": "./configSchema.json",
     "positionX": "right",
-    "positionY": "top",
+    "positionY": "bottom",
     "layer": "overlay",
     "control-center-layer": "top",
+    "control-center-positionY": "top",
     "layer-shell": true,
     "cssPriority": "application",
     "control-center-margin-top": 0,
