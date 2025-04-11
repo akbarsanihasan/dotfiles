@@ -11,9 +11,23 @@ SAVEHIST=1000
 autoload -Uz compinit
 compinit
 
+tmux_sessionaizer() {
+    zle -I
+    BUFFER="tmux.sessionaizer"
+    zle accept-line
+}
+zle -N tmux_sessionaizer
+
+tmux_main() {
+    zle -I
+    BUFFER="tmux.sessionaizer main"
+    zle accept-line
+}
+zle -N tmux_main
+
 bindkey -e
-bindkey -s '^G' "tmux.sessionaizer\n"
-bindkey -s '^V' "tmux.sessionaizer main\n"
+bindkey "^[;" tmux_sessionaizer
+bindkey "^['" tmux_main
 
 if command -v trash-put &>/dev/null; then
     alias rm='trash-put -v'
@@ -89,7 +103,7 @@ export PATH="$HOME/.node/manager/bin:$PATH"
 export NPM_CONFIG_CACHE=$HOME/.node
 export NPM_CONFIG_PREFIX=$HOME/.node
 if command -v fnm &>/dev/null; then
-   eval "$(fnm env --shell zsh)"
+    eval "$(fnm env --shell zsh)"
 fi
 export FNM_DIR=$HOME/.node/manager
 # END nodejs
