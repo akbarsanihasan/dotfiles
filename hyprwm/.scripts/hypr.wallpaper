@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+MODE=$1
+WPP_PATH=$2
+WPP_ROOT_DIR=$HOME/.wallpapers
+
+if ! systemctl --user is-active --quiet hyprpaper.service; then
+    echo "Hyprpaper is dead"
+    notify-send "Wallpaper daemon" "hyprpaper is dead"
+    systemctl --user restart hyprpaper
+fi
+
+get_wallpaper() {
+    local WPP_DIR=$WPP_PATH
+    local IMG=$WPP_PATH
+    local CURRENT_WPP
+    CURRENT_WPP=$(hyprctl hyprpaper listloaded)
+
+    if [[ -z $WPP_PATH ]]; then
+        case $(date +%H) in
+        05 | 06 | 07 | 08 | 09 | 10)
+            WPP_DIR="$WPP_ROOT_DIR/monochrome"
+            ;;
+        11 | 12 | 13 | 14 | 15 | 16)
+            WPP_DIR="$WPP_ROOT_DIR/dark"
+            ;;
+        17 | 18 | 19 | 20 | 21 | 22)
+            WPP_DIR="$WPP_ROOT_DIR/pastel"
+            ;;
+        23 | 00 | 01 | 02 | 03 | 04)
+            WPP_DIR="$WPP_ROOT_DIR/green"
+            ;;
+        esac
+    fi
+
+    if [[ -d "$WPP_ROOT_DIR/$WPP_PATH" ]]; then
+        WPP_DIR="$WPP_ROOT_DIR/$WPP_PATH"
+    fi
+
+    if [[ -d $WPP_DIR ]]; then
+        IMG="$(find "$WPP_DIR" -type f ! -name "$(basename "$CURRENT_WPP")" | shuf -n 1)"
+    fi
+
+    echo "$IMG"
+}
+
+apply() {
+    local IMG=$(get_wallpaper)
+    hyprctl hyprpaper reload ,"$IMG"
+}
+
+daemon() {
+    mapfile -t daemons < <(pgrep -f ".*wallpaper.*daemon.*")
+    mapfile -t daemons_old < <(pgrep -f -o ".*wallpaper.*daemon.*")
+
+    if [[ "${#daemons[@]}" -gt 1 ]]; then
+        for daemon in "${daemons_old[@]}"; do
+            kill -9 "${daemon}"
+        done
+    fi
+
+    while true; do
+        apply
+        sleep 599
+    done
+}
+
+case $MODE in
+"apply") apply ;;
+"daemon") daemon ;;
+*) echo "$MODE, command not found available <apply|daemon>" ;;
+esac

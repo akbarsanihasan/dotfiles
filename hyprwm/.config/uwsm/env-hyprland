@@ -1,0 +1,7 @@
+export AQ_TRACE=1
+export AQ_MGPU_NO_EXPLICIT=1
+export AQ_NO_MODIFIERS=1
+
+export HYPRLAND_TRACE=1
+export HYPRLAND_NO_RT=1
+

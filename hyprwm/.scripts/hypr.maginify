@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+IN_VALUE=0.03
+OUT_VALUE=0.03
+mode=$1
+
+current_zoom=$(hyprctl -j getoption cursor:zoom_factor | jq -r '.float')
+current_sensitivity=$(hyprctl -j getoption input:sensitivity | jq -r '.float')
+
+if [[ "$mode" == "in" ]]; then
+    zoom_value=$(awk "BEGIN {printf \"%.2f\", $current_zoom + $IN_VALUE}")
+    sensitivity_value=$(awk "BEGIN {printf \"%.2f\", $current_sensitivity + ($IN_VALUE + 0.05)}")
+fi
+
+if [[ "$mode" == "out" ]]; then
+    if awk -v n1="$current_zoom" -v n2="1" 'BEGIN { if (n1 > n2) exit 0; else exit 1 }'; then
+        zoom_value=$(awk "BEGIN {printf \"%.2f\", $current_zoom - $OUT_VALUE}")
+        sensitivity_value=$(awk "BEGIN {printf \"%.2f\", $current_sensitivity - ($OUT_VALUE + 0.05)}")
+    else
+        zoom_value=$current_zoom
+        sensitivity_value=$current_sensitivity
+    fi
+fi
+
+case $1 in
+"in" | "out")
+    hyprctl keyword cursor:zoom_factor "$zoom_value"
+    hyprctl keyword input:sensitivity "$sensitivity_value"
+    ;;
+"reset")
+    hyprctl reload
+    ;;
+*)
+    echo -e "Usage: "
+    echo -e "magnify <in|out>"
+    echo -e "magnify reset"
+    ;;
+esac
