@@ -1,3 +1,5 @@
+*.log
+
 /common/.config/nvim
 /common/.config/tmux/plugins
 

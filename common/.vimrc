@@ -3,13 +3,12 @@ filetype indent on
 syntax on
 
 set shell=zsh
-
-colorscheme retrobox
 set background=dark
 set cursorline
 set guicursor=
 set nolist
 set fillchars=eob:\ 
+set termguicolors
 
 set number
 set relativenumber
@@ -83,3 +82,19 @@ nnoremap <silent> <leader>x :!chmod +x %<CR>
 
 nnoremap <silent> <leader><leader> :so $MYVIMRC<CR>
 nnoremap <silent> <leader>pv :Ex<cr>
+
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Begin plugin section
+call plug#begin('~/.vim/plugged')
+
+Plug 'tpope/vim-sensible'  " example plugin
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+
+call plug#end()
+
+colorscheme catppuccin_mocha
